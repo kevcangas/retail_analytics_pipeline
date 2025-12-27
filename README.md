@@ -1,4 +1,4 @@
-# 🚀 Proyecto ETL: Docker + Python (Polars) + PostgreSQL
+# 🚀 Proyecto ETL: Retail Analytics Pipeline
 
 Este proyecto implementa una **pipeline ETL (Extract, Transform, Load)** completamente contenerizada. Simula un entorno de comercio electrónico donde se generan datos transaccionales sintéticos, se transforman utilizando **Polars** (para alto rendimiento) y se cargan en un Data Warehouse analítico.
 
