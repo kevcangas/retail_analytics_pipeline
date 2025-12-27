@@ -1,0 +1,41 @@
+services:
+  # 1. Base de datos Transaccional (Fuente)
+  source_db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user_source
+      POSTGRES_PASSWORD: password_source
+      POSTGRES_DB: ecommerce_db
+    ports:
+      - "5432:5432"
+    networks:
+      - etl_network
+
+  # 2. Data Warehouse (Destino)
+  warehouse_db:
+    image: postgres:13
+    environment:
+      POSTGRES_USER: user_dw
+      POSTGRES_PASSWORD: password_dw
+      POSTGRES_DB: analytics_dw
+    ports:
+      - "5433:5432" # Mapeamos al puerto local 5433 para evitar conflictos
+    networks:
+      - etl_network
+
+  # 3. Nuestro Script ETL
+  etl_job:
+    build: ./etl
+    volumes:
+      - ./etl:/app # Montamos el código para desarrollo en vivo
+    depends_on:
+      - source_db
+      - warehouse_db
+    networks:
+      - etl_network
+    # El comando mantiene el contenedor vivo para que podamos ejecutar el script manualmente
+    command: tail -f /dev/null 
+
+networks:
+  etl_network:
+    driver: bridge

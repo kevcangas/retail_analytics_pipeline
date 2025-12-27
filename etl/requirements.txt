@@ -1,0 +1,6 @@
+polars
+sqlalchemy
+psycopg2-binary
+faker
+pandas
+pyarrow
